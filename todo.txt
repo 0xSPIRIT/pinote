@@ -1,0 +1,5 @@
+TODO
+====
+
+We want to have a system that stores notes using markdown.
+You can store images, video, 
