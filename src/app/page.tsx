@@ -1,6 +1,9 @@
 'use client';
 
-import Button from "../components/button";
+import Button from "../components/Button";
+import FileDialog from "../components/FileDialog";
+import * as utils from "../util/util";
+
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
@@ -12,34 +15,6 @@ const MDEditor = dynamic(
   () => import("@uiw/react-md-editor"),
   { ssr: false }
 );
-
-function capFirstLetter(str: string) {
-  if (str.length == 0)
-    return "";
-
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-type PopupProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  children: ReactNode | ReactNode[];
-};
-
-function Popup(props: PopupProps) {
-  if (!props.isOpen) {
-    return null;
-  }
-
-  return (
-    <div className="popup-overlay" onClick={props.onClose}>
-      <div className="popup-content" onClick={(e: Event) => e.stopPropagation()}>
-        {props.children}
-        <Button name="Close" onClick={props.onClose}/>
-      </div>
-    </div>
-  );
-}
 
 export default function Home() {
   const [value, setValue] = useState("# Journal Entry");
@@ -60,40 +35,21 @@ export default function Home() {
     }
   };
 
-  const prependDate = () => {
-    const now = new Date();
-    const localizedDate = now.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-
-    const timeOptions = { 
-      hour: 'numeric', 
-      minute: 'numeric', 
-      hour12: true 
-    };
-    const timeString = now.toLocaleString('en-US', timeOptions); 
-
-    setValue("*" + localizedDate + " " + timeString + "*" + "\n\n" + value);
-  };
+  const prependDate = () => setValue("*" + utils.getDateTime() + "*" + "\n\n" + value);
 
   return (
     <div>
       <div className="flex flex-col gap-4 p-4">
-        <div className="flex gap-4">
+        <FileDialog/>
+        <div className="flex gap-2">
           <Button name="New" onClick={handleClick}/>
           <Button name="Save" onClick={handleClick}/>
           <Button name="Load" onClick={handleOpenPopup}/>
           <Button name="Date" onClick={prependDate}/>
-          <Button name={"Display (" + capFirstLetter(viewState) + ")"} onClick={handleDisplay}/>
+          <Button name={"Display (" + utils.capFirstLetter(viewState) + ")"} onClick={handleDisplay}/>
         </div>
         <MDEditor autoFocus={true} autoFocusEnd={true} value={value} onChange={setValue} preview="edit" hideToolbar={true} height="580px" preview={viewState}/>
       </div>
-      <Popup isOpen={popupOpen} onClose={handleClosePopup}>
-        <p> This is a popup </p>
-        <p> Peeepeeeee pooopoooo </p>
-      </Popup>
     </div>
   );
 }

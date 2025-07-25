@@ -1,5 +1,24 @@
-TODO
-====
+TODO - pinote
+=============
 
 We want to have a system that stores notes using markdown.
-You can store images, video, 
+You can store images & video through a media subfolder.
+
+Whenever you insert an image in-place, it checks to see
+if a media/ subdirectory exists. If not, it creates it,
+and uploads it to the server there.
+
+There's a file picker dialog that allows you to see the
+whole file structure, create subfolders, and create /
+load notes.
+
+This whole thing would be run on a Raspberry Pi server,
+so I can access my journals from anywhere in the world,
+especially since I'm going to Canada soon for my exchange
+semester. I'll have the Pi running at home, and I'd be
+able to access it, or SSH into it if I need to diagnose
+any issues.
+
+[ ] File picker dialog component
+[ ] Set Static IP for Pi
+[ ] Setup Raspberry Pi - Buy a keyboard and monitor
