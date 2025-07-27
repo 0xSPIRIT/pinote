@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "Pinote",
 };
 
 export default function RootLayout({

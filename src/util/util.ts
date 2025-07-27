@@ -44,3 +44,37 @@ export function substringElements(str: string, substr: string): number {
 
   return maxCount;
 }
+
+export async function readFileFromServer(filepath: string) {
+  const getRequest = "http://localhost:3000/api/note?query=" + filepath;
+
+  try {
+    const res = await fetch(getRequest);
+    const data = await res.json();
+
+    return data.result;
+  } catch (err) {
+    console.error("Error fetching file: ", err);
+    return "INVALID";
+  }
+}
+
+export async function saveFileToServer(filepath: string, data: string) {
+  try {
+    const response = await fetch("http://localhost:3000/api/note",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        filepath: filepath,
+        data: data
+      })
+    });
+
+    if (!response.ok) {
+      console.error("fetch() error: ", await response.text());
+    }
+  } catch (err) {
+    console.error("Error saving file: ", err);
+  }
+}

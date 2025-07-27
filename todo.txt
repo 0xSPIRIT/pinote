@@ -20,5 +20,14 @@ able to access it, or SSH into it if I need to diagnose
 any issues.
 
 [ ] File picker dialog component
+  [x] Make it so that when you press Load it turns on the
+      file picker, and when you click close, it turns it off
+  [x] Add API endpoint for retreiving files
+  [x] Make this integrated with a real file system and dummy
+      files
+  [ ] New file function
+  [ ] New folder function
+  [ ] Make preview work
+
 [ ] Set Static IP for Pi
 [ ] Setup Raspberry Pi - Buy a keyboard and monitor
